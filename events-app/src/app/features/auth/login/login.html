@@ -10,14 +10,19 @@
       <form>
 
         <div class="form-group">
-          <input type="email" placeholder="Email Address" />
+          <input type="email" placeholder="Email Address" [value]="email()"
+            (input)="email.set($event.target.value); onInputChange()" />
         </div>
 
         <div class="form-group">
-          <input type="password" placeholder="Password" />
+          <input type="password" placeholder="Password" [value]="password()"
+            (input)="password.set($event.target.value); onInputChange()" />
         </div>
 
-        <button type="submit" class="btn-login">Login</button>
+        <button type="submit" class="btn-login" (click)="submit()" [disabled]="loading()">{{ loading() ? 'Logging in...'
+          : 'Login' }}</button>
+
+        <p @if(error()) class="error-msg">{{ error() }}</p>
 
         <div class="login-footer-center">
           <span>Don’t have an account?</span>
