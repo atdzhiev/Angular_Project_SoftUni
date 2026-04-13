@@ -1,0 +1,140 @@
+
+.register-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+
+ 
+  background-image: url('/assets/img/hero/h1_hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 160px 20px 60px; 
+}
+
+
+.register-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.35);
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+.register-container {
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.register-box {
+  background: #ffffff;
+  padding: 40px 35px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  text-align: center;
+}
+
+
+.register-title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+  color: #2d2d2d;
+}
+
+.register-subtitle {
+  font-size: 15px;
+  color: #777;
+  letter-spacing: 0.3px;
+  margin-bottom: 30px;
+}
+
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #ff5f6d;
+  box-shadow: 0 0 0 3px rgba(255,95,109,0.15);
+  outline: none;
+}
+
+
+.btn-register {
+  width: 100%;
+  padding: 14px;
+  background: #ff3d1c;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-register:hover {
+  background: #ff3b4f;
+}
+
+
+.register-footer-center {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  letter-spacing: 0.3px;
+}
+
+.register-footer-center a {
+  color: #ff5f6d;
+  font-weight: 600;
+  margin-left: 5px;
+  text-decoration: none;
+  letter-spacing: 0.4px;
+  transition: color 0.3s ease;
+}
+
+.register-footer-center a:hover {
+  color: #ff3b4f;
+}
+
+
+app-header header {
+  background: transparent !important;
+  box-shadow: none !important;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+.header-sticky {
+  background: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
