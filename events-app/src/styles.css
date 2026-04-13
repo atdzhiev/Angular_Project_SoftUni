@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('styles/animate.min.css');
+@import url('styles/bootstrap.min.css');
+@import url('styles/flaticon.css');
+@import url('styles/fontawesome-all.min.css');
+@import url('styles/magnific-popup.css');
+@import url('styles/main.css');
+@import url('styles/nice-select.css');
+@import url('styles/owl.carousel.min.css');
+@import url('styles/price_rangs.css');
+@import url('styles/responsive.css');
+@import url('styles/slick.css');
+@import url('styles/slicknav.css');
+@import url('styles/style.css');
+@import url('styles/themify-icons.css');
