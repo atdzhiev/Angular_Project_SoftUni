@@ -1,17 +1,19 @@
 @if (event()) {
-  @let e = event();
+@let e = event();
 
 <section class="details-page">
 
 
   <div class="carousel">
-    <img [src]="e.images[currentImage]" class="carousel-image">
+    @if (e!.images && e!.images.length > 0) {
+    <img [src]="e!.images[currentImage]" class="carousel-image">
+    }
 
     <button class="carousel-btn left" (click)="prevImage()">❮</button>
     <button class="carousel-btn right" (click)="nextImage()">❯</button>
   </div>
 
-  <h1 class="details-title">{{ e.title }}</h1>
+  <h1 class="details-title">{{ e!.title }}</h1>
 
   <div class="details-info">
 
@@ -20,7 +22,7 @@
         <span class="icon-location-pin info-icon"></span>
         <div>
           <h4>Town</h4>
-          <p>{{ e.town }}</p>
+          <p>{{ e!.town }}</p>
         </div>
       </div>
 
@@ -28,7 +30,7 @@
         <span class="icon-home info-icon"></span>
         <div>
           <h4>Address</h4>
-          <p>{{ e.address }}</p>
+          <p>{{ e!.address }}</p>
         </div>
       </div>
     </div>
@@ -38,7 +40,7 @@
         <span class="icon-calendar info-icon"></span>
         <div>
           <h4>Date & Time</h4>
-          <p>{{ e.date }}</p>
+          <p>{{ e!.date }}</p>
         </div>
       </div>
 
@@ -46,19 +48,26 @@
         <span class="icon-tag info-icon"></span>
         <div>
           <h4>Ticket Price</h4>
-          <p>{{ e.price }}</p>
+          <p>{{ e!.price }}</p>
         </div>
       </div>
     </div>
 
     <div class="description-block">
       <h3>Description</h3>
-      <p>{{ e.description }}</p>
+      <p>{{ e!.description }}</p>
     </div>
 
     <button class="details-btn">
       View Tickets
     </button>
+
+    @if (isOwner()) {
+    <div class="owner-actions">
+      <button class="edit-btn" [routerLink]="['/edit', e!._id]">Edit</button>
+      <button class="delete-btn" (click)="deleteEvent()">Delete</button>
+    </div>
+    }
 
   </div>
 

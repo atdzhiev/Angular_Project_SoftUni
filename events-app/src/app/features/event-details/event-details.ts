@@ -1,42 +1,38 @@
-import { Component,inject,signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { EventItem } from '../../shared/interfaces/event';
-
-
+import { EventService } from '../../core/services/event';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-event-details',
-  imports: [],
+  standalone: true,
+  imports: [RouterModule],
   templateUrl: './event-details.html',
   styleUrl: './event-details.css',
 })
 export class EventDetails {
-  private route = inject(ActivatedRoute);
 
-  event = signal<any>(null);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private eventService = inject(EventService);
+  private authService = inject(AuthService);
+
+  event = signal<EventItem | null>(null);
+  isOwner = signal(false);
   currentImage = 0;
 
-  constructor() {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id')!;
 
-      
-      const mockEvent = {
-        id,
-        title: 'Rock Concert',
-        town: 'Sofia',
-        address: 'Arena Armeec',
-        price: '25 BGN',
-        images: [
-          'assets/img/our_blog/blog-img1.jpg',
-          'assets/img/service/1.png',
-          'assets/img/service/2.png'
-        ],
-        date: '2026-05-12 20:00',
-        description: 'A great rock concert with top bands performing live.'
-      };
+    this.eventService.getOne(id).subscribe(ev => {
+      this.event.set(ev);
 
-      this.event.set(mockEvent);
+      const user = this.authService.user();
+
+      if (user && ev._ownerId === user._id) {
+        this.isOwner.set(true);
+      }
     });
   }
 
@@ -51,5 +47,13 @@ export class EventDetails {
     if (!imgs) return;
     this.currentImage = (this.currentImage + 1) % imgs.length;
   }
-}
 
+  deleteEvent() {
+    const id = this.event()?._id;
+    if (!id) return;
+
+    this.eventService.delete(id).subscribe(() => {
+      this.router.navigate(['/catalog']);
+    });
+  }
+}

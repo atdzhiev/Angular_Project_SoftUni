@@ -1,6 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { EventCardComponent } from '../../shared/components/event-card/event-card';
 import { EventItem } from '../../shared/interfaces/event';
+import { EventService } from '../../core/services/event';
+
 
 @Component({
   selector: 'app-catalog',
@@ -11,47 +13,18 @@ import { EventItem } from '../../shared/interfaces/event';
 })
 export class CatalogComponent {
 
-  events = signal<EventItem[]>([
-    {
-      id: '1',
-      title: 'Rock Concert',
-      category: 'Music',
-      town: 'Sofia',
-      address: 'Arena Armeec',
-      price: '25 BGN',
-      imageUrl: '/assets/img/our_blog/blog-img1.jpg',
-      date: '2026-05-12 20:00',
-      description: 'A great rock concert with top bands.',
-      website: 'https://rockfest.bg',
-      phone: '+359 888 123 456'
-    },
-    {
-      id: '1',
-      title: 'Rock Concert',
-      category: 'Music',
-      town: 'Sofia',
-      address: 'Arena Armeec',
-      price: '25 BGN',
-      imageUrl: '/assets/img/our_blog/blog-img1.jpg',
-      date: '2026-05-12 20:00',
-      description: 'A great rock concert with top bands.',
-      website: 'https://rockfest.bg',
-      phone: '+359 888 123 456'
-    },{
-      id: '1',
-      title: 'Rock Concert',
-      category: 'Music',
-      town: 'Sofia',
-      address: 'Arena Armeec',
-      price: '25 BGN',
-      imageUrl: '/assets/img/our_blog/blog-img1.jpg',
-      date: '2026-05-12 20:00',
-      description: 'A great rock concert with top bands.',
-      website: 'https://rockfest.bg',
-      phone: '+359 888 123 456'
-    }
-  ]);
+  private eventService = inject(EventService);
 
- 
+  events = signal<EventItem[]>([]);
+
+  constructor() {
+    this.loadEvents();
+  }
+
+  loadEvents() {
+    this.eventService.getAll().subscribe({
+      next: (data) => this.events.set(data),
+      error: (err) => console.error('Failed to load events', err)
+    });
+  }
 }
-

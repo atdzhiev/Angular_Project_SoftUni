@@ -2,7 +2,7 @@
   <h2 class="catalog-title">Upcoming Events</h2>
 
   <div class="catalog-grid">
-    @for (event of events(); track event.id) {
+    @for (event of events(); track event._id) {
       <app-event-card [event]="event"></app-event-card>
     }
   </div>
