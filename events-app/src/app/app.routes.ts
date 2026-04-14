@@ -32,4 +32,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import("./features/event-add/event-add").then((m) => m.EventAdd),
   },
+  {
+    path: 'edit/:id',
+    loadComponent: () =>
+      import('./features/event-add/event-add').then(m => m.EventAdd)
+  }
 ];
