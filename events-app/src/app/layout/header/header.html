@@ -5,6 +5,7 @@
         <div class="container-fluid">
           <div class="row align-items-center">
 
+
             <div class="col-xl-2 col-lg-2 col-md-1">
               <div class="logo">
                 <a routerLink="/">
@@ -13,26 +14,29 @@
               </div>
             </div>
 
+
             <div class="col-xl-10 col-lg-10 col-md-8">
               <div class="main-menu f-right d-none d-lg-block">
                 <nav>
                   <ul id="navigation">
+
+
                     <li><a routerLink="/" routerLinkActive="active">Home</a></li>
-                    <li><a routerLink="/about" routerLinkActive="active">About</a></li>
                     <li><a routerLink="/events" routerLinkActive="active">All Events</a></li>
-                    <li><a routerLink="/listing" routerLinkActive="active">Listing</a></li>
+                    <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
 
-                    <li>
-                      <a href="#">Page</a>
-                      <ul class="submenu">
-                        <li><a routerLink="/blog">Blog</a></li>
-                        <li><a routerLink="/blog-details">Blog Details</a></li>
-                        <li><a routerLink="/elements">Elements</a></li>
-                        <li><a routerLink="/listing-details">Listing Details</a></li>
-                      </ul>
+
+                    @if (!user()) {
+                    <li class="login" style="margin-left: auto;">
+                      <a routerLink="/login" routerLinkActive="active">
+                        <i class="ti-user"></i> Sign in
+                      </a>
                     </li>
+                    }
 
-                    <li><a routerLink="/contact">Contact</a></li>
+
+                    @if (user()) {
+
 
                     <li class="add-list">
                       <a routerLink="/create" routerLinkActive="active">
@@ -40,19 +44,24 @@
                       </a>
                     </li>
 
-                    <li class="login">
-                      <a routerLink="/login" routerLinkActive="active">
-                        <i class="ti-user"></i> Sign in or Register
-                      </a>
+
+                    <li class="page-menu" style="margin-left: auto;">
+                      <a routerLink="/profile">
+                        <img src="assets/img/prising/5.png" alt="Profile" class="profile-avatar">My
+                        Profile</a>
+                      <ul class="submenu">
+                        <li><a routerLink="/profile/edit">Edit Profile</a></li>
+                        <li><a routerLink="/profile/events">My Events</a></li>
+                        <li><a routerLink="/profile/joined">Joined Events</a></li>
+                        <li><a (click)="logout()">Logout</a></li>
+                      </ul>
                     </li>
+
+                    }
+
                   </ul>
                 </nav>
               </div>
-            </div>
-
-            <!-- Mobile menu -->
-            <div class="col-12">
-              <div class="mobile_menu d-block d-lg-none"></div>
             </div>
 
           </div>

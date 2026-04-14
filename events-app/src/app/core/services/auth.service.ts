@@ -77,7 +77,7 @@ export class AuthService {
   logout() {
     this._loading.set(true);
 
-    return this.http.get(`${this.baseUrl}/logout`,  { withCredentials: true }).pipe(
+    return this.http.post(`${this.baseUrl}/logout`,  { withCredentials: true }).pipe(
       tap({
         next: () => {
           this._user.set(null);

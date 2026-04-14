@@ -1,0 +1,27 @@
+#navigation *,
+.page-menu *,
+.submenu * {
+  pointer-events: auto !important;
+}
+
+.page-menu {
+  position: relative;
+}
+
+.page-menu .submenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  z-index: 99999;
+}
+
+/* Force pointer events ON for logout */
+.page-menu .submenu a,
+.page-menu .submenu button,
+.login a,
+.login button {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
