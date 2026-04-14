@@ -27,4 +27,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import("./features/event-details/event-details").then((m) => m.EventDetails),
   },
+  {
+    path: "create",
+    loadComponent: () =>
+      import("./features/event-add/event-add").then((m) => m.EventAdd),
+  },
 ];
