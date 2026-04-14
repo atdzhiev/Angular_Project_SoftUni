@@ -1,0 +1,66 @@
+@if (event()) {
+  @let e = event();
+
+<section class="details-page">
+
+
+  <div class="carousel">
+    <img [src]="e.images[currentImage]" class="carousel-image">
+
+    <button class="carousel-btn left" (click)="prevImage()">❮</button>
+    <button class="carousel-btn right" (click)="nextImage()">❯</button>
+  </div>
+
+  <h1 class="details-title">{{ e.title }}</h1>
+
+  <div class="details-info">
+
+    <div class="info-row">
+      <div class="info-item">
+        <span class="icon-location-pin info-icon"></span>
+        <div>
+          <h4>Town</h4>
+          <p>{{ e.town }}</p>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <span class="icon-home info-icon"></span>
+        <div>
+          <h4>Address</h4>
+          <p>{{ e.address }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-row">
+      <div class="info-item">
+        <span class="icon-calendar info-icon"></span>
+        <div>
+          <h4>Date & Time</h4>
+          <p>{{ e.date }}</p>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <span class="icon-tag info-icon"></span>
+        <div>
+          <h4>Ticket Price</h4>
+          <p>{{ e.price }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="description-block">
+      <h3>Description</h3>
+      <p>{{ e.description }}</p>
+    </div>
+
+    <button class="details-btn">
+      View Tickets
+    </button>
+
+  </div>
+
+</section>
+}

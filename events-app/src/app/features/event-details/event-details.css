@@ -1,0 +1,144 @@
+
+.details-page {
+  max-width: 900px;
+  margin: 150px auto 40px; 
+  padding: 20px;
+}
+
+
+.details-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #0C325B;
+}
+
+
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 260px; 
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity .3s ease;
+}
+
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background .2s ease;
+}
+
+.carousel-btn:hover {
+  background: rgba(0,0,0,0.6);
+}
+
+.carousel-btn.left {
+  left: 10px;
+}
+
+.carousel-btn.right {
+  right: 10px;
+}
+
+
+.details-info {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.info-item {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px;
+  background: #f7f9fc;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.info-icon {
+  font-size: 28px;
+  color: #0C325B;
+  margin-top: 3px;
+}
+
+.info-item h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.info-item p {
+  margin: 2px 0 0 0;
+  color: #555;
+}
+
+
+.description-block h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #0C325B;
+}
+
+.description-block p {
+  font-size: 16px;
+  color: #444;
+  line-height: 1.6;
+}
+
+
+.details-btn {
+  width: 100%;
+  padding: 14px;
+  background: #ff8c00;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.details-btn:hover {
+  background: #e57a00;
+}
+
+
+@media (max-width: 768px) {
+  .info-row {
+    flex-direction: column;
+  }
+
+  .carousel {
+    height: 200px; 
+  }
+}
