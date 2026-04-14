@@ -13,3 +13,21 @@
 @import url('assets/css/slicknav.css');
 @import url('assets/css/style.css');
 @import url('assets/css/themify-icons.css');
+
+
+.header-area,
+.header-transparent,
+.main-header,
+.header-bottom {
+  background: linear-gradient(to right, #19508C, #0C325B, #051E3C) !important;
+  background-color: rgb(12,50,91) !important;
+}
+
+
+
+.home-active .header-area,
+.home-active .header-transparent,
+.home-active .main-header,
+.home-active .header-bottom {
+  background: transparent !important;
+}

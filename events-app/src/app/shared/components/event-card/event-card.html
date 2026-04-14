@@ -1,0 +1,38 @@
+<div class="event-card">
+  <img [src]="event.imageUrl" alt="Event image" class="event-image">
+
+  <div class="event-info">
+
+    <h3 class="event-title">{{ event.title }}</h3>
+
+    <div class="event-meta">
+      <div class="left">
+        <p class="event-town">
+          <span class="icon-location-pin"></span>
+          {{ event.town }}
+        </p>
+
+        <p class="event-address">
+          <span class="icon-home"></span>
+          {{ event.address }}
+        </p>
+      </div>
+
+      <div class="right">
+        <p class="event-date">
+          <span class="icon-calendar"></span>
+          {{ event.date }}
+        </p>
+      </div>
+    </div>
+
+    <p class="event-price-centered">
+      Ticket price: <strong>{{ event.price }}</strong>
+    </p>
+
+    <button class="details-btn" [routerLink]="['/events', event.id]">
+      View Details
+    </button>
+
+  </div>
+</div>
