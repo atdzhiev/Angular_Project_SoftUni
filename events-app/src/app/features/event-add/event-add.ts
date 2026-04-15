@@ -114,35 +114,40 @@ export class EventAdd {
   }
 
   save() {
-  
-  this.form.markAllAsTouched();
+    this.form.markAllAsTouched();
 
-  this.validatePrice();
-  if (this.form.invalid) {
-    if (this.priceInvalid) {
-    this.formError = "Price must be a number or 'Free'";
+    this.validatePrice();
+
+    if (this.form.invalid || this.priceInvalid) {
+      this.formError = this.priceInvalid
+        ? "Price must be a number or 'Free'"
+        : "Please fill all required fields";
+      return;
+    }
+
+    this.formError = '';
+
+    const raw = this.form.getRawValue();
+
+    const formattedDate = raw.date.split('-').reverse().join('/');
+
+    const data = {
+      ...raw,
+      date: formattedDate,
+      images: this.imagesArray.getRawValue()
+    };
+
+    if (this.isEdit()) {
+      const id = this.eventId()!;
+      this.eventService.update(id, data as EventItem).subscribe(() => {
+        this.router.navigate(['/events', id]);
+      });
+    } else {
+      this.eventService.create(data as EventItem).subscribe(created => {
+        this.router.navigate(['/events', created._id]);
+      });
+    }
   }
-    this.formError = "Please fill all required fields";
-    return;
-  }
 
-  this.formError = '';
-
-  const data = {
-    ...this.form.getRawValue(),
-    images: this.imagesArray.getRawValue()
-  };
-
-  if (this.isEdit()) {
-    const id = this.eventId()!;
-    this.eventService.update(id, data as EventItem).subscribe(() => {
-      this.router.navigate(['/events', id]);
-    });
-  } else {
-    this.eventService.create(data as EventItem).subscribe(created => {
-      this.router.navigate(['/events', created._id]);
-    });
-  }
-}
 
 }
