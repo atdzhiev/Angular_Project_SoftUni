@@ -1,16 +1,184 @@
 .catalog-page {
-  padding: 40px 20px;
+  padding: 50px 20px;
+  margin-top: 120px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .catalog-title {
   text-align: center;
-  font-size: 32px;
-  margin-bottom: 30px;
+  font-size: 38px;
+  font-weight: 700;
+  color: #0C325B;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
 }
+
+.catalog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin: 20px 0 40px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  font-size: 14px;
+  color: #0C325B;
+  font-weight: 600;
+}
+
+.filter-group label {
+  margin-bottom: 6px;
+}
+
+.filter-group select,
+.filter-group input[type="date"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  background: #fff;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.filter-group select:hover,
+.filter-group input[type="date"]:hover {
+  border-color: #0C325B;
+}
+
+.filter-group select:focus,
+.filter-group input[type="date"]:focus {
+  outline: none;
+  border-color: #0C325B;
+  box-shadow: 0 0 0 2px rgba(12, 50, 91, 0.15);
+}
+
+.clear-btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #ff4d4d;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.clear-btn:hover {
+  background: #e63b3b;
+}
+
 
 .catalog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 25px;
+  gap: 18px;
 }
 
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 35px;
+}
+
+.pagination button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #0C325B;
+  color: white;
+  border-color: #0C325B;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.page-btn.active {
+  background: #0C325B;
+  color: white;
+  border-color: #0C325B;
+}
+
+@media (max-width: 768px) {
+  .catalog-title {
+    font-size: 30px;
+  }
+
+  .filter-group {
+    min-width: 140px;
+  }
+
+  .catalog-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 40px;
+  padding: 10px 0;
+}
+
+.pagination button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #d0d0d0;
+  background: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0C325B;
+  cursor: pointer;
+  min-width: 45px;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.15s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #0C325B;
+  color: #ffffff;
+  border-color: #0C325B;
+  transform: translateY(-2px);
+}
+
+.pagination button:disabled {
+  opacity: 0.35;
+  cursor: default;
+  transform: none;
+}
+
+.page-btn.active {
+  background: #0C325B;
+  color: #ffffff;
+  border-color: #0C325B;
+  transform: none;
+}
+
+.page-btn.active:hover {
+  background: #0C325B;
+  color: #ffffff;
+  border-color: #0C325B;
+  transform: none;
+}

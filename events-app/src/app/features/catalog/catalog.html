@@ -1,10 +1,89 @@
 <section class="catalog-page">
-  <h2 class="catalog-title">Upcoming Events</h2>
+  <h1 class="catalog-title">Upcoming Events</h1>
 
+  <div class="catalog-filters">
+
+    
+    <div class="filter-group">
+      <label>Town:</label>
+      <select [value]="selectedTown()" (change)="applyTownFilter($any($event.target).value)">
+        <option value="">All</option>
+        <option value="Sofia">Sofia</option>
+        <option value="Plovdiv">Plovdiv</option>
+        <option value="Varna">Varna</option>
+        <option value="Burgas">Burgas</option>
+      </select>
+    </div>
+
+   
+    <div class="filter-group">
+      <label>Category:</label>
+      <select [value]="selectedCategory()" (change)="applyCategoryFilter($any($event.target).value)">
+        <option value="">All</option>
+        <option value="Music">Music</option>
+        <option value="Sports">Sports</option>
+        <option value="Theatre">Theatre</option>
+        <option value="Festival">Festival</option>
+      </select>
+    </div>
+
+    
+    <div class="filter-group">
+      <label>From date:</label>
+      <input type="date" [value]="selectedDate()" (change)="applyDateFilter($any($event.target).value)">
+    </div>
+
+    
+    <div class="filter-group">
+      <label>Price:</label>
+      <select [value]="priceSort()" (change)="applyPriceSort($any($event.target).value)">
+        <option value="">None</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending/option>
+      </select>
+    </div>
+
+   
+    <div class="filter-group">
+      <label>Date:</label>
+      <select [value]="dateSort()" (change)="applyDateSort($any($event.target).value)">
+        <option value="">None</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </div>
+
+    
+    <div class="filter-group">
+      <label>&nbsp;</label>
+      <button class="clear-btn" (click)="clearFilters()">Clear Filters</button>
+    </div>
+
+  </div>
+
+ 
   <div class="catalog-grid">
-    @for (event of events(); track event._id) {
-      <app-event-card [event]="event"></app-event-card>
+    @for (event of paginatedEvents(); track event._id) {
+    <app-event-card [event]="event"></app-event-card>
     }
   </div>
-</section>
 
+  
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage() === 1">
+      Prev
+    </button>
+
+    @for (page of pageNumbers(); track page) {
+    <button class="page-btn" [class.active]="currentPage() === page" (click)="goToPage(page)">
+      {{ page }}
+    </button>
+    }
+
+    <button (click)="nextPage()" [disabled]="currentPage() === totalPages()">
+      Next
+    </button>
+  </div>
+
+
+</section>
