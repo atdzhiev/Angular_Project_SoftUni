@@ -9,6 +9,5 @@ export interface EventItem {
   images: string[];
   date: string; 
   description: string;
-  website?: string;
-  phone?: string;
+  participants: string[];
 }

@@ -4,6 +4,7 @@ const themes = require('./themes');
 const posts = require('./posts');
 const likes = require('./likes');
 const test = require('./test');
+const events = require('./events');
 const { authController } = require('../controllers');
 
 router.post('/register', authController.register);
@@ -15,5 +16,6 @@ router.use('/themes', themes);
 router.use('/posts', posts);
 router.use('/likes', likes);
 router.use('/test', test);
+router.use('/events', events);
 
 module.exports = router;

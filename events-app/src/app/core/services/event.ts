@@ -6,7 +6,7 @@ import { EventItem } from '../../shared/interfaces/event';
 @Injectable({ providedIn: 'root' })
 export class EventService {
   private http = inject(HttpClient);
-  private baseUrl = 'http://localhost:3030/events';
+  private baseUrl = 'http://localhost:3000/api/events';
 
   getAll(): Observable<EventItem[]> {
     return this.http.get<EventItem[]>(this.baseUrl, {
