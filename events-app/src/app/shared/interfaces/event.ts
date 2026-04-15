@@ -7,7 +7,8 @@ export interface EventItem {
   address: string;
   price: string;
   images: string[];
-  date: string; 
+  date: string;
+  time: string; 
   description: string;
   participants: string[];
 }

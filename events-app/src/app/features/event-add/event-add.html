@@ -1,48 +1,43 @@
 <section class="form-page">
 
-
+  
   <div class="image-panel">
 
     <h2>Event Images</h2>
 
     <label>Add Image URL</label>
     <div class="image-add-row">
-      <input
-        type="text"
-        placeholder="https://example.com/image.jpg"
-        [(ngModel)]="imageUrl"
-        [ngModelOptions]="{ standalone: true }"
-      >
+      <input type="text" placeholder="https://example.com/image.jpg" [(ngModel)]="imageUrl"
+        [ngModelOptions]="{ standalone: true }">
       <button type="button" (click)="addImage()">Add</button>
     </div>
 
-    
     @if (imagesArray.touched && imagesArray.errors?.['minImages']) {
-      <p class="error">At least one image is required</p>
+    <p class="error-message">At least one image is required</p>
     }
 
     <div class="image-list-wrapper">
       <div class="image-list">
         @for (img of imagesArray.controls; track $index) {
-          <div class="image-item">
+        <div class="image-item">
 
-            <img [src]="img.value">
+          <img [src]="img.value">
 
-            @if ($index === 0) {
-              <span class="main-badge">Main</span>
-            }
+          @if ($index === 0) {
+          <span class="main-badge">Main</span>
+          }
 
-            @if ($index !== 0) {
-              <button type="button" (click)="setMainImage($index)">
-                Set Main
-              </button>
-            }
+          @if ($index !== 0) {
+          <button type="button" class="set-main-btn" (click)="setMainImage($index)">
+            Set Main
+          </button>
+          }
 
-            <button type="button" (click)="removeImage($index)">
-              Remove
-            </button>
+          <button type="button" class="remove-btn" (click)="removeImage($index)">
+            Remove
+          </button>
 
-          </div>
+        </div>
         }
       </div>
     </div>
@@ -54,81 +49,101 @@
 
     <h1>{{ isEdit() ? 'Edit Event' : 'Add Event' }}</h1>
 
+   
+    @if (formError) {
+    <p class="error-message">{{ formError }}</p>
+    }
+
+    
     <div class="form-group">
       <label>Title</label>
       <input formControlName="title" type="text">
-
       @if (form.get('title')?.touched && form.get('title')?.errors?.['required']) {
-        <p class="error">This field is required</p>
+      <p class="error-message">This field is required</p>
       }
     </div>
 
-    
+  
     <div class="form-group">
       <label>Category</label>
       <input formControlName="category" type="text">
-
       @if (form.get('category')?.touched && form.get('category')?.errors?.['required']) {
-        <p class="error">This field is required</p>
+      <p class="error-message">This field is required</p>
       }
     </div>
 
-    
+   
     <div class="form-row">
       <div class="form-group">
         <label>Town</label>
-        <input formControlName="town" type="text">
-
+        <select formControlName="town">
+          <option value="">Select town</option>
+          <option value="Sofia">Sofia</option>
+          <option value="Plovdiv">Plovdiv</option>
+          <option value="Varna">Varna</option>
+          <option value="Burgas">Burgas</option>
+        </select>
         @if (form.get('town')?.touched && form.get('town')?.errors?.['required']) {
-          <p class="error">This field is required</p>
+        <p class="error-message">This field is required</p>
         }
       </div>
 
-     
       <div class="form-group">
         <label>Address</label>
         <input formControlName="address" type="text">
-
         @if (form.get('address')?.touched && form.get('address')?.errors?.['required']) {
-          <p class="error">This field is required</p>
+        <p class="error-message">This field is required</p>
         }
       </div>
     </div>
 
-    
+   
     <div class="form-row">
       <div class="form-group">
-        <label>Date & Time</label>
-        <input formControlName="date" type="text">
-
+        <label>Date</label>
+        <input formControlName="date" type="date">
         @if (form.get('date')?.touched && form.get('date')?.errors?.['required']) {
-          <p class="error">This field is required</p>
+        <p class="error-message">This field is required</p>
         }
       </div>
 
       <div class="form-group">
-        <label>Price</label>
-        <input formControlName="price" type="text">
-
-        @if (form.get('price')?.touched && form.get('price')?.errors?.['required']) {
-          <p class="error">This field is required</p>
+        <label>Start Time</label>
+        <input formControlName="time" type="text" placeholder="HH:MM" pattern="^[0-2][0-9]:[0-5][0-9]$" maxlength="5">
+        @if (form.get('time')?.touched && form.get('time')?.errors?.['required']) {
+        <p class="error-message">This field is required</p>
         }
       </div>
     </div>
 
    
     <div class="form-group">
-      <label>Description</label>
-      <textarea formControlName="description"></textarea>
-
-      @if (form.get('description')?.touched && form.get('description')?.errors?.['required']) {
-        <p class="error">This field is required</p>
+      <label>Price</label>
+      <input formControlName="price" type="text" placeholder="Enter number or 'Free'" (input)="validatePrice()"
+        [class.invalid]="priceInvalid">
+      @if (priceInvalid) {
+      <p class="error-message">Price must be a number or 'Free'</p>
       }
     </div>
 
-    <button class="save-btn" type="submit">
-      {{ isEdit() ? 'Save Changes' : 'Create Event' }}
-    </button>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea formControlName="description" placeholder="Enter description"></textarea>
+      @if (form.get('description')?.touched && form.get('description')?.errors?.['required']) {
+      <p class="error-message">This field is required</p>
+      }
+    </div>
+
+    <div class="form-buttons">
+      <button class="save-btn" type="submit">
+        {{ isEdit() ? 'Save Changes' : 'Create Event' }}
+      </button>
+
+      <button type="button" class="cancel-btn" (click)="router.navigate(['/events'])">
+        Cancel
+      </button>
+    </div>
+
 
   </form>
 

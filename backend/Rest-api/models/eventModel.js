@@ -12,6 +12,7 @@ const eventSchema = new mongoose.Schema({
   price: String,
   images: [String],
   date: String,
+  time: String,
   description: String,
 
   

@@ -31,13 +31,15 @@ function minImages(min: number) {
 export class EventAdd {
   private fb = inject(FormBuilder);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  public router = inject(Router);
   private eventService = inject(EventService);
 
   isEdit = signal(false);
   eventId = signal<string | null>(null);
 
   imageUrl = '';
+  formError = '';
+  priceInvalid = false;
 
   form = this.fb.group({
     title: this.fb.nonNullable.control('', Validators.required),
@@ -45,8 +47,10 @@ export class EventAdd {
     town: this.fb.nonNullable.control('', Validators.required),
     address: this.fb.nonNullable.control('', Validators.required),
     date: this.fb.nonNullable.control('', Validators.required),
+    time: this.fb.nonNullable.control('', Validators.required),
     price: this.fb.nonNullable.control('', Validators.required),
     description: this.fb.nonNullable.control('', Validators.required),
+
     images: this.fb.array<FormControl<string>>([], {
       validators: [minImages(1)]
     })
@@ -64,17 +68,16 @@ export class EventAdd {
       this.eventId.set(id);
 
       this.eventService.getOne(id).subscribe(ev => {
-
         this.form.patchValue({
           title: ev.title,
           category: ev.category,
           town: ev.town,
           address: ev.address,
           date: ev.date,
+          time: ev.time ?? '',
           price: ev.price,
           description: ev.description
         });
-
 
         ev.images.forEach(img => {
           this.imagesArray.push(this.fb.nonNullable.control(img));
@@ -101,27 +104,45 @@ export class EventAdd {
     this.imagesArray.insert(0, control);
   }
 
-  save() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
+  validatePrice() {
+    const value = this.form.get('price')?.value?.trim() || '';
 
-    const data = {
-      ...this.form.getRawValue(),
-      images: this.imagesArray.getRawValue()
-    };
+    const isNumber = /^\d+(\.\d+)?$/.test(value);
+    const isFree = value.toLowerCase() === 'free';
 
-    if (this.isEdit()) {
-      const id = this.eventId()!;
-      this.eventService.update(id, data as EventItem).subscribe(() => {
-        this.router.navigate(['/events', id]);
-      });
-    } else {
-      this.eventService.create(data as EventItem).subscribe(created => {
-        this.router.navigate(['/events', created._id]);
-      });
-    }
+    this.priceInvalid = !(isNumber || isFree);
   }
+
+  save() {
+  
+  this.form.markAllAsTouched();
+
+  this.validatePrice();
+  if (this.form.invalid) {
+    if (this.priceInvalid) {
+    this.formError = "Price must be a number or 'Free'";
+  }
+    this.formError = "Please fill all required fields";
+    return;
+  }
+
+  this.formError = '';
+
+  const data = {
+    ...this.form.getRawValue(),
+    images: this.imagesArray.getRawValue()
+  };
+
+  if (this.isEdit()) {
+    const id = this.eventId()!;
+    this.eventService.update(id, data as EventItem).subscribe(() => {
+      this.router.navigate(['/events', id]);
+    });
+  } else {
+    this.eventService.create(data as EventItem).subscribe(created => {
+      this.router.navigate(['/events', created._id]);
+    });
+  }
+}
 
 }
