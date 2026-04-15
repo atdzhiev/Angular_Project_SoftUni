@@ -41,4 +41,21 @@ export class EventService {
    getLastThree(): Observable<EventItem[]> {
     return this.http.get<EventItem[]>(`${this.baseUrl}/events?limit=3`);
   }
+
+  joinEvent(eventId: string): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}/${eventId}/join`,
+      {},
+      { withCredentials: true }
+    );
+  }
+
+  leaveEvent(eventId: string): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}/${eventId}/leave`,
+      {},
+      { withCredentials: true }
+    );
+  }
+  
 }

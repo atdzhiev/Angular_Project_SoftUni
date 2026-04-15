@@ -1,75 +1,87 @@
-@if (event()) {
-@let e = event();
-
 <section class="details-page">
 
+  @if (event()) {
+  @let e = event()!;
 
-  <div class="carousel">
-    @if (e!.images && e!.images.length > 0) {
-    <img [src]="e!.images[currentImage]" class="carousel-image">
-    }
+  <h1 class="details-title">{{ e.title }}</h1>
 
-    <button class="carousel-btn left" (click)="prevImage()">❮</button>
-    <button class="carousel-btn right" (click)="nextImage()">❯</button>
+  <div class="details-layout">
+
+    <!-- LEFT SIDE -->
+    <div class="details-left">
+
+      <!-- DESCRIPTION FIRST (VALUE ONLY) -->
+      <p class="description-text">
+        {{ e.description }}
+      </p>
+
+      <!-- ADDRESS -->
+      <p class="info-line">
+        <strong>Address:</strong> {{ e.town }}, {{ e.address }}
+      </p>
+
+      <!-- DATE -->
+      <p class="info-line">
+        <strong>Date:</strong> {{ e.date }}
+      </p>
+
+      <!-- PRICE -->
+      <p class="info-line">
+        <strong>Price:</strong> {{ e.price }}
+      </p>
+
+      <!-- NOT LOGGED IN -->
+      @if (!isLoggedIn()) {
+      <div class="login-box">
+        <span class="login-text">Wish to join the event:</span>
+        <button class="login-btn" routerLink="/login">Sign in</button>
+      </div>
+      }
+
+
+      <!-- LOGGED IN & NOT OWNER -->
+      @if (isLoggedIn() && !isOwner()) {
+
+      @if (!hasJoined()) {
+      <button class="join-btn" (click)="joinEvent()">Join Event</button>
+      }
+
+      @if (hasJoined()) {
+      <button class="join-btn joined" (click)="leaveEvent()">Leave Event</button>
+      }
+
+      }
+
+    </div>
+
+
+
+    <!-- RIGHT SIDE -->
+    <div class="details-right">
+
+      @if (isOwner()) {
+      <div class="top-actions">
+        <button class="edit-btn" [routerLink]="['/edit', e._id]">Edit</button>
+        <button class="delete-btn" (click)="deleteEvent()">Delete</button>
+      </div>
+      }
+
+      <img [src]="e.images[currentImage]" class="main-image">
+    </div>
+
   </div>
 
-  <h1 class="details-title">{{ e!.title }}</h1>
+  <!-- BOTTOM GALLERY -->
+  <div class="gallery-wrapper">
 
-  <div class="details-info">
-
-    <div class="info-row">
-      <div class="info-item">
-        <span class="icon-location-pin info-icon"></span>
-        <div>
-          <h4>Town</h4>
-          <p>{{ e!.town }}</p>
-        </div>
-      </div>
-
-      <div class="info-item">
-        <span class="icon-home info-icon"></span>
-        <div>
-          <h4>Address</h4>
-          <p>{{ e!.address }}</p>
-        </div>
-      </div>
+    <div class="gallery-row" #gallery>
+      @for (img of e.images; track $index) {
+      <img [src]="img" class="gallery-thumb" (click)="currentImage = $index">
+      }
     </div>
-
-    <div class="info-row">
-      <div class="info-item">
-        <span class="icon-calendar info-icon"></span>
-        <div>
-          <h4>Date & Time</h4>
-          <p>{{ e!.date }}</p>
-        </div>
-      </div>
-
-      <div class="info-item">
-        <span class="icon-tag info-icon"></span>
-        <div>
-          <h4>Ticket Price</h4>
-          <p>{{ e!.price }}</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="description-block">
-      <h3>Description</h3>
-      <p>{{ e!.description }}</p>
-    </div>
-
-    <button class="details-btn">
-      View Tickets
-    </button>
-
-    @if (isOwner()) {
-    <div class="owner-actions">
-      <button class="edit-btn" [routerLink]="['/edit', e!._id]">Edit</button>
-      <button class="delete-btn" (click)="deleteEvent()">Delete</button>
-    </div>
-    }
 
   </div>
+
+  }
 
 </section>
-}

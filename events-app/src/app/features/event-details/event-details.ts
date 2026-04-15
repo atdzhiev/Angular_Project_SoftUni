@@ -20,6 +20,8 @@ export class EventDetails {
 
   event = signal<EventItem | null>(null);
   isOwner = signal(false);
+  joined = signal(false);
+  isLoggedIn = signal(false);
   currentImage = 0;
 
   ngOnInit() {
@@ -29,10 +31,45 @@ export class EventDetails {
       this.event.set(ev);
 
       const user = this.authService.user();
-
-      if (user && ev._ownerId === user._id) {
+      if (!user) return;
+      this.isLoggedIn.set(true);
+      
+      if (typeof ev._ownerId === 'object' && (ev._ownerId as any)._id === user._id) {
         this.isOwner.set(true);
       }
+
+      
+      if (ev.participants?.includes(user._id)) {
+        this.joined.set(true);
+      }
+    });
+  }
+
+  hasJoined() {
+    return this.joined();
+  }
+
+  joinEvent() {
+    const e = this.event();
+    if (!e) return;
+
+    const user = this.authService.user();
+    if (!user) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.eventService.joinEvent(e._id).subscribe(() => {
+      this.joined.set(true);
+    });
+  }
+
+  leaveEvent() {
+    const e = this.event();
+    if (!e) return;
+
+    this.eventService.leaveEvent(e._id).subscribe(() => {
+      this.joined.set(false);
     });
   }
 
@@ -53,7 +90,12 @@ export class EventDetails {
     if (!id) return;
 
     this.eventService.delete(id).subscribe(() => {
-      this.router.navigate(['/catalog']);
+      this.router.navigate(['/events']);
     });
+  }
+
+  scrollGallery(amount: number) {
+    const gallery = document.querySelector('.gallery-row') as HTMLElement;
+    if (gallery) gallery.scrollLeft += amount;
   }
 }
