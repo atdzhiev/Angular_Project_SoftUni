@@ -89,6 +89,10 @@ export class EventDetails {
     const id = this.event()?._id;
     if (!id) return;
 
+    const confirmed = confirm("Are you sure you want to delete this event?");
+
+    if (!confirmed) return;
+
     this.eventService.delete(id).subscribe(() => {
       this.router.navigate(['/events']);
     });
