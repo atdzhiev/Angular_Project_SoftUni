@@ -57,5 +57,14 @@ export class EventService {
       { withCredentials: true }
     );
   }
-  
+
+
+  getByCreator(userId: string): Observable<EventItem[]> {
+    return this.http.get<EventItem[]>(
+      `${this.baseUrl}?creator=${userId}`,
+      { withCredentials: true }
+    );
+  }
+
 }
+

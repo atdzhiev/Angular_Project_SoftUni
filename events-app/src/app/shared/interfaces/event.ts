@@ -1,6 +1,11 @@
 export interface EventItem {
   _id: string;
-  _ownerId: string;
+  _ownerId: {
+    _id: string;
+    email:string;
+    username: string;
+    events: string[];
+  };
   title: string;
   category: string;
   town: string;

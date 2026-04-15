@@ -23,7 +23,7 @@
 
                     <li><a routerLink="/" routerLinkActive="active">Home</a></li>
                     <li><a routerLink="/events" routerLinkActive="active">All Events</a></li>
-                    <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
+                    <li><a routerLink="/profile" routerLinkActive="active">Contact</a></li>
 
 
                     @if (!user()) {
@@ -50,9 +50,7 @@
                         <img src="assets/img/prising/5.png" alt="Profile" class="profile-avatar">My
                         Profile</a>
                       <ul class="submenu">
-                        <li><a routerLink="/profile/edit">Edit Profile</a></li>
-                        <li><a routerLink="/profile/events">My Events</a></li>
-                        <li><a routerLink="/profile/joined">Joined Events</a></li>
+                        <li><a routerLink="/profile">Edit Profile</a></li>
                         <li><a (click)="logout()">Logout</a></li>
                       </ul>
                     </li>

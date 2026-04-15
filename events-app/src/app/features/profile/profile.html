@@ -1,0 +1,75 @@
+<div class="profile-wrapper">
+
+    <div class="profile-header">
+
+        <div class="profile-photo-wrapper">
+            <img class="profile-photo" src="https://i.pravatar.cc/150" alt="Profile Photo">
+        </div>
+
+        <div class="profile-info">
+            <h2>{{ user()?.username }}</h2>
+            <p>{{ user()?.email }}</p>
+        </div>
+
+    </div>
+
+  
+    <div class="profile-grid">
+
+        <div class="profile-column">
+            <h3>My Events</h3>
+
+            @if (myEvents().length > 0) {
+            @for (ev of myEvents(); track ev._id) {
+            <div class="event-card" (click)="goToEvent(ev._id)">
+
+                <img class="event-photo" [src]="ev.images && ev.images.length > 0 ? ev.images[0] : 'https://via.placeholder.com/120'" />
+
+                <div class="event-info">
+                    <h4>{{ ev.title }}</h4>
+                    <p><strong>Location:</strong> {{ ev.town }}, {{ ev.address }}</p>
+                    <p><strong>Date:</strong> {{ ev.date }} {{ ev.time }}</p>
+                </div>
+
+                <div class="event-actions">
+                    <button class="edit-btn" (click)="editEvent(ev._id); $event.stopPropagation()">Edit</button>
+                    <button class="delete-btn" (click)="deleteEvent(ev._id); $event.stopPropagation()">Delete</button>
+                </div>
+
+            </div>
+            }
+
+            } @else {
+            <p class="empty">You haven't created any events</p>
+            }
+        </div>
+
+        <div class="profile-column">
+            <h3>Joined Events</h3>
+
+            @if (joinedEvents().length > 0) {
+            @for (ev of joinedEvents(); track ev._id) {
+            <div class="event-card" (click)="goToEvent(ev._id)">
+
+                <img class="event-photo" [src]="ev.images && ev.images.length > 0 ? ev.images[0] : 'https://via.placeholder.com/120'" />
+
+                <div class="event-info">
+                    <h4>{{ ev.title }}</h4>
+                    <p><strong>Location:</strong> {{ ev.town }}, {{ ev.address }}</p>
+                    <p><strong>Date:</strong> {{ ev.date }} {{ ev.time }}</p>
+                </div>
+
+                <div class="event-actions">
+                    <button class="leave-btn" (click)="leaveEvent(ev._id); $event.stopPropagation()">Leave</button>
+                </div>
+
+            </div>
+            }
+        }
+            @else {
+            <p class="empty">You haven't joined any events</p>
+            }
+        </div>
+
+    </div>
+</div>

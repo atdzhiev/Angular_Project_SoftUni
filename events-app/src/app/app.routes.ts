@@ -18,6 +18,11 @@ export const routes: Routes = [
       import("./features/auth/register/register").then((m) => m.Register),
   },
   {
+    path: "profile",
+    loadComponent: () =>
+      import("./features/profile/profile").then((m) => m.Profile),
+  },
+  {
     path: "events",
     loadComponent: () =>
       import("./features/catalog/catalog").then((m) => m.CatalogComponent),
