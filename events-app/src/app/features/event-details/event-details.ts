@@ -25,23 +25,29 @@ export class EventDetails {
   currentImage = 0;
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id')!;
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (!id) return;
+      this.event.set(null);
+      this.isOwner.set(false);
+      this.joined.set(false);
+      this.isLoggedIn.set(false);
 
-    this.eventService.getOne(id).subscribe(ev => {
-      this.event.set(ev);
+      this.eventService.getOne(id).subscribe(ev => {
+        this.event.set(ev);
 
-      const user = this.authService.user();
-      if (!user) return;
-      this.isLoggedIn.set(true);
-      
-      if (typeof ev._ownerId === 'object' && (ev._ownerId as any)._id === user._id) {
-        this.isOwner.set(true);
-      }
+        const user = this.authService.user();
+        if (!user) return;
 
-      
-      if (ev.participants?.includes(user._id)) {
-        this.joined.set(true);
-      }
+        this.isLoggedIn.set(true);
+        if (ev._ownerId && (ev._ownerId as any)._id === user._id) {
+          this.isOwner.set(true);
+        }
+
+        if (ev.participants?.some((p: any) => p._id === user._id)) {
+          this.joined.set(true);
+        }
+      });
     });
   }
 
@@ -59,8 +65,10 @@ export class EventDetails {
       return;
     }
 
-    this.eventService.joinEvent(e._id).subscribe(() => {
-      this.joined.set(true);
+    this.eventService.joinEvent(e._id).subscribe(updated => {
+
+      this.event.set(updated);
+      this.joined.set(updated.participants.some((p: any) => p._id === user._id));
     });
   }
 
@@ -68,8 +76,12 @@ export class EventDetails {
     const e = this.event();
     if (!e) return;
 
-    this.eventService.leaveEvent(e._id).subscribe(() => {
-      this.joined.set(false);
+    const user = this.authService.user();
+    if (!user) return;
+
+    this.eventService.leaveEvent(e._id).subscribe(updated => {
+      this.event.set(updated);
+      this.joined.set(updated.participants.some((p: any) => p._id === user._id));
     });
   }
 
@@ -89,9 +101,7 @@ export class EventDetails {
     const id = this.event()?._id;
     if (!id) return;
 
-    const confirmed = confirm("Are you sure you want to delete this event?");
-
-    if (!confirmed) return;
+    if (!confirm("Are you sure you want to delete this event?")) return;
 
     this.eventService.delete(id).subscribe(() => {
       this.router.navigate(['/events']);
