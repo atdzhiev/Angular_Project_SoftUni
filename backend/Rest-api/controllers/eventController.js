@@ -1,4 +1,5 @@
 const { eventModel } = require('../models');
+const {userModel} = require('../models')
 
 
 function getEvents(req, res, next) {
@@ -52,32 +53,55 @@ function deleteEvent(req, res, next) {
 }
 
 
-function joinEvent(req, res, next) {
-    const { eventId } = req.params;
-    const { _id: userId } = req.user;
+async function joinEvent(req, res, next) {
+    try {
+        const { eventId } = req.params;
+        const { _id: userId } = req.user;
 
-    eventModel.findByIdAndUpdate(
-        eventId,
-        { $addToSet: { participants: userId } },
-        { new: true }
-    )
-        .then(event => res.json(event))
-        .catch(next);
+        const event = await eventModel.findByIdAndUpdate(
+            eventId,
+            { $addToSet: { participants: userId } },
+            { new: true }
+        );
+
+        await userModel.findByIdAndUpdate(
+            userId,
+            { $addToSet: { events: eventId } }
+        );
+
+        res.json(event);
+
+    } catch (err) {
+        next(err);
+    }
 }
 
 
-function leaveEvent(req, res, next) {
-    const { eventId } = req.params;
-    const { _id: userId } = req.user;
 
-    eventModel.findByIdAndUpdate(
-        eventId,
-        { $pull: { participants: userId } },
-        { new: true }
-    )
-        .then(event => res.json(event))
-        .catch(next);
+async function leaveEvent(req, res, next) {
+    try {
+        const { eventId } = req.params;
+        const { _id: userId } = req.user;
+
+       
+        const event = await eventModel.findByIdAndUpdate(
+            eventId,
+            { $pull: { participants: userId } },
+            { new: true }
+        );
+
+        await userModel.findByIdAndUpdate(
+            userId,
+            { $pull: { events: eventId } }
+        );
+
+        res.json(event);
+
+    } catch (err) {
+        next(err);
+    }
 }
+
 
 module.exports = {
     getEvents,

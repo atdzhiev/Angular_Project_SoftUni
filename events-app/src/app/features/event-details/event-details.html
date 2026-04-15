@@ -7,30 +7,30 @@
 
   <div class="details-layout">
 
-    <!-- LEFT SIDE -->
+  
     <div class="details-left">
 
-      <!-- DESCRIPTION FIRST (VALUE ONLY) -->
+      
       <p class="description-text">
         {{ e.description }}
       </p>
 
-      <!-- ADDRESS -->
+     
       <p class="info-line">
         <strong>Address:</strong> {{ e.town }}, {{ e.address }}
       </p>
 
-      <!-- DATE -->
+     
       <p class="info-line">
         <strong>Date:</strong> {{ e.date }}
       </p>
 
-      <!-- PRICE -->
+     
       <p class="info-line">
         <strong>Price:</strong> {{ e.price }}
       </p>
 
-      <!-- NOT LOGGED IN -->
+    
       @if (!isLoggedIn()) {
       <div class="login-box">
         <span class="login-text">Wish to join the event:</span>
@@ -39,7 +39,7 @@
       }
 
 
-      <!-- LOGGED IN & NOT OWNER -->
+      
       @if (isLoggedIn() && !isOwner()) {
 
       @if (!hasJoined()) {
@@ -56,7 +56,7 @@
 
 
 
-    <!-- RIGHT SIDE -->
+    
     <div class="details-right">
 
       @if (isOwner()) {
@@ -71,7 +71,7 @@
 
   </div>
 
-  <!-- BOTTOM GALLERY -->
+  
   <div class="gallery-wrapper">
 
     <div class="gallery-row" #gallery>
