@@ -1,0 +1,92 @@
+<div class="contact-wrapper">
+
+  <h1>Contact Us</h1>
+  <p class="subtitle">Have questions? Send us a message and we’ll get back to you.</p>
+
+  <div class="contact-grid">
+
+  
+    <form class="contact-form" #contactForm="ngForm" (ngSubmit)="submitForm(contactForm)">
+
+     
+      <label>Name</label>
+      <input type="text"
+             name="name"
+             [(ngModel)]="name"
+             required
+             #nameField="ngModel"
+             placeholder="Your name">
+
+      <div class="error" *ngIf="nameField.invalid && nameField.touched">
+        Name is required
+      </div>
+
+     
+      <label>Email</label>
+      <input type="email"
+             name="email"
+             [(ngModel)]="email"
+             required
+             email
+             #emailField="ngModel"
+             placeholder="Your email">
+
+      <div class="error" *ngIf="emailField.invalid && emailField.touched">
+        Valid email is required
+      </div>
+
+     
+      <label>Message</label>
+      <textarea name="message"
+                [(ngModel)]="message"
+                required
+                minlength="5"
+                #messageField="ngModel"
+                placeholder="Your message"></textarea>
+
+      <div class="error" *ngIf="messageField.invalid && messageField.touched">
+        Message must be at least 5 characters
+      </div>
+
+      <button type="submit">
+        Send Message
+      </button>
+    </form>
+
+    
+    <div class="contact-info">
+      <h3>Contact Information</h3>
+
+      <p><strong>Address:</strong><br> Sofia, Bulgaria</p>
+
+     
+      <div class="mini-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11317.01726383433!2d23.318962!3d42.697708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa8570c3e6e0d1%3A0x400a01269bf5d30!2sSofia!5e0!3m2!1sen!2sbg!4v0000000000000"
+          width="100%"
+          height="140"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy">
+        </iframe>
+      </div>
+
+      <p><strong>Email:</strong><br> support@example.com</p>
+
+      <p><strong>Phone:</strong><br> +359 888 123 456</p>
+
+    </div>
+
+  </div>
+</div>
+
+
+@if (showModal()) {
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <h2>Thank you for your message!</h2>
+    <p>We will contact you as soon as possible.</p>
+    <button class="close-btn" (click)="closeModal()">Close</button>
+  </div>
+</div>
+}

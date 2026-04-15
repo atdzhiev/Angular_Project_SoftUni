@@ -41,5 +41,10 @@ export const routes: Routes = [
     path: 'edit/:id',
     loadComponent: () =>
       import('./features/event-add/event-add').then(m => m.EventAdd)
+  },
+  {
+    path: 'contact',
+    loadComponent: () =>
+      import('./features/contact/contact').then(m => m.Contact)
   }
 ];
