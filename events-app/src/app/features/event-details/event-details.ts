@@ -28,26 +28,32 @@ export class EventDetails {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (!id) return;
-      this.event.set(null);
-      this.isOwner.set(false);
-      this.joined.set(false);
-      this.isLoggedIn.set(false);
 
-      this.eventService.getOne(id).subscribe(ev => {
-        this.event.set(ev);
+      this.loadEvent(id);
+    });
+  }
 
-        const user = this.authService.user();
-        if (!user) return;
+  loadEvent(id: string) {
+    this.event.set(null);
+    this.isOwner.set(false);
+    this.joined.set(false);
+    this.isLoggedIn.set(false);
 
-        this.isLoggedIn.set(true);
-        if (ev._ownerId && (ev._ownerId as any)._id === user._id) {
-          this.isOwner.set(true);
-        }
+    this.eventService.getOne(id).subscribe(ev => {
+      this.event.set(ev);
 
-        if (ev.participants?.some((p: any) => p._id === user._id)) {
-          this.joined.set(true);
-        }
-      });
+      const user = this.authService.user();
+      if (!user) return;
+
+      this.isLoggedIn.set(true);
+
+      if (ev._ownerId && (ev._ownerId as any)._id === user._id) {
+        this.isOwner.set(true);
+      }
+
+      if (ev.participants?.some((p: any) => p._id === user._id)) {
+        this.joined.set(true);
+      }
     });
   }
 
@@ -65,10 +71,8 @@ export class EventDetails {
       return;
     }
 
-    this.eventService.joinEvent(e._id).subscribe(updated => {
-
-      this.event.set(updated);
-      this.joined.set(updated.participants.some((p: any) => p._id === user._id));
+    this.eventService.joinEvent(e._id).subscribe(() => {
+      this.loadEvent(e._id);
     });
   }
 
@@ -79,9 +83,8 @@ export class EventDetails {
     const user = this.authService.user();
     if (!user) return;
 
-    this.eventService.leaveEvent(e._id).subscribe(updated => {
-      this.event.set(updated);
-      this.joined.set(updated.participants.some((p: any) => p._id === user._id));
+    this.eventService.leaveEvent(e._id).subscribe(() => {
+      this.loadEvent(e._id);
     });
   }
 
