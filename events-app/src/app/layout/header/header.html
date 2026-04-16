@@ -29,7 +29,7 @@
                     @if (!user()) {
                     <li class="login" style="margin-left: auto;">
                       <a routerLink="/login" routerLinkActive="active">
-                        <i class="ti-user"></i> Sign in
+                        <i class="fas fa-user"></i>Sign in
                       </a>
                     </li>
                     }
@@ -47,10 +47,9 @@
 
                     <li class="page-menu" style="margin-left: auto;">
                       <a routerLink="/profile">
-                        <img src="assets/img/prising/5.png" alt="Profile" class="profile-avatar">My
-                        Profile</a>
+                       <img src="https://i.pravatar.cc/150" alt="Profile Photo"></a>
                       <ul class="submenu">
-                        <li><a routerLink="/profile">Edit Profile</a></li>
+                        <li><a routerLink="/profile">My Profile</a></li>
                         <li><a (click)="logout()">Logout</a></li>
                       </ul>
                     </li>

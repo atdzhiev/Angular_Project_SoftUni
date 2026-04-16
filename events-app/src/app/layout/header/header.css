@@ -16,12 +16,26 @@
   z-index: 99999;
 }
 
-/* Force pointer events ON for logout */
 .page-menu .submenu a,
 .page-menu .submenu button,
 .login a,
 .login button {
     pointer-events: auto !important;
     cursor: pointer !important;
+}
+
+.page-menu img {
+  width: 50px;         
+  height: 50px;
+  border-radius: 50%; 
+  object-fit: cover;  
+  border: 2px solid #fff; 
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+
+.page-menu img:hover {
+  transform: scale(1.08);
 }
 

@@ -19,12 +19,7 @@ export class Header {
     return this.auth.user(); // 
   }
 
-  testClick() {
-  console.log('OUTSIDE CLICK WORKS');
-}
-
   logout() {
-    console.log("dadaada");
     this.auth.logout().subscribe({
       next: () => {
         this.router.navigate(['/']);
