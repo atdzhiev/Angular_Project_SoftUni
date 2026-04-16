@@ -3,74 +3,72 @@
         <div class="container">
             <div class="footer-top footer-padding">
                 <div class="row justify-content-between">
+
+
                     <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
                         <div class="single-footer-caption mb-50">
                             <div class="single-footer-caption mb-30">
-
                                 <div class="footer-logo">
-                                    <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                                    <a [routerLink]="['/']" (click)="scrollTop()">
+                                        <img src="assets/img/logo/logo2_footer.png" alt="Logo">
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">
                                 <h4>Quick Link</h4>
                                 <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">Listing</a></li>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Contact</a></li>
+                                    <li><a [routerLink]="['/']" (click)="scrollTop()">Home</a></li>
+                                    <li><a [routerLink]="['/events']">All Events</a></li>
+                                    <li><a [routerLink]="['/contact']" (click)="scrollTop()">Contact</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">
-                                <h4>Categories</h4>
+                                <h4>Explore the events</h4>
                                 <ul>
-                                    <li><a href="#">Reasonable Hotel</a></li>
-                                    <li><a href="#">Popular Restaurant</a></li>
-                                    <li><a href="#">Easy Shopping</a></li>
-                                    <li><a href="#">Night Life</a></li>
+                                    <li><a [routerLink]="['/events']" [queryParams]="{ town: 'Sofia' }">Sofia</a></li>
+                                    <li><a [routerLink]="['/events']" [queryParams]="{ town: 'Plovdiv' }">Plovdiv</a>
+                                    </li>
+                                    <li><a [routerLink]="['/events']" [queryParams]="{ town: 'Varna' }">Varna</a></li>
+                                    <li><a [routerLink]="['/events']" [queryParams]="{ town: 'Burgas' }">Burgas</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Download App</h4>
-                                <ul>
-                                    <li class="app-log"><a href="#"><img src="assets/img/gallery/app-logo.png"
-                                                alt=""></a></li>
-                                    <li><a href="#"><img src="assets/img/gallery/app-logo2.png" alt=""></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div class="row d-flex justify-content-between align-items-center">
-                    <div class="col-xl-9 col-lg-8">
-                        <div class="footer-copy-right">
-                            All rights reserved | This template is made with
-                        </div>
-                    </div>
+
                     <div class="col-xl-3 col-lg-4">
                         <div class="footer-social f-right">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fas fa-globe"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
+
                 </div>
             </div>
+
+            <div class="footer-bottom">
+                <div class="row d-flex justify-content-between align-items-center">
+
+                    <div class="col-xl-9 col-lg-8">
+                        <div class="footer-copy-right">
+                             &copy; All rights reserved.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </div>
-
 </footer>

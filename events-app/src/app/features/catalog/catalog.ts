@@ -37,6 +37,7 @@ export class CatalogComponent {
       this.searchText.set(params['q'] || '');
       this.selectedTown.set(params['town'] || '');
       this.currentPage.set(1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     this.eventService.getAll().subscribe(data => this.events.set(data));
   }
