@@ -22,7 +22,6 @@
         <button type="submit" class="btn-login" (click)="submit()" [disabled]="loading()">{{ loading() ? 'Logging in...'
           : 'Login' }}</button>
 
-        <p @if(error()) class="error-msg">{{ error() }}</p>
 
         <div class="login-footer-center">
           <span>Don’t have an account?</span>
