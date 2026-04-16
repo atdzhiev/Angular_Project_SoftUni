@@ -156,3 +156,20 @@ app-header header {
   color: #ff3b4f;
 }
 
+input.ng-invalid.ng-touched {
+  border: 1px solid #e53935 !important;
+  background: #ffecec;
+}
+
+.error-msg {
+  color: #e53935;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+.btn-login:disabled {
+  background: #9e9e9e !important;
+  cursor: not-allowed;
+  opacity: 0.8;
+}

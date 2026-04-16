@@ -1,7 +1,7 @@
 .toast {
   position: fixed;
-  top: 160px;          /* margin from top */
-  right: 40px;        /* margin from right */
+  top: 160px;         
+  right: 40px;       
   background: #e53935;
   color: white;
   padding: 14px 20px;

@@ -16,7 +16,7 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
         notifier.showError(err.error?.message || 'Invalid request.');
       }
       else if (err.status === 401) {
-        notifier.showError('You must be logged in.');
+        notifier.showError('Wrong email or password');
       }
       else if (err.status === 403) {
         notifier.showError('You do not have permission.');

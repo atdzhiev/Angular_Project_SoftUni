@@ -1,11 +1,12 @@
 import { Component, signal, computed, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router,RouterLink } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule,RouterLink],
+  standalone: true,
+  imports: [FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -19,12 +20,22 @@ export class Login {
   loading = computed(() => this.auth.loading());
   error = computed(() => this.auth.error());
 
-  submit() {
+  submit(form: NgForm) {
     this.auth.login({
       email: this.email(),
       password: this.password()
     }).subscribe({
-      next: () => this.router.navigate(['/']),
+      next: () => {
+        this.email.set('');
+        this.password.set('');
+
+        form.resetForm();
+
+        this.router.navigate(['/']);
+      },
+      error: () => {
+        form.resetForm();
+      }
     });
   }
 
@@ -32,4 +43,3 @@ export class Login {
     this.auth.clearError();
   }
 }
-
