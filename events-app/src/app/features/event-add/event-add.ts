@@ -68,12 +68,17 @@ export class EventAdd {
       this.eventId.set(id);
 
       this.eventService.getOne(id).subscribe(ev => {
+        let isoDate = ev.date;
+        if (ev.date.includes('/')) {
+          const [day, month, year] = ev.date.split('/');
+          isoDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        }
         this.form.patchValue({
           title: ev.title,
           category: ev.category,
           town: ev.town,
           address: ev.address,
-          date: ev.date,
+          date: isoDate,
           time: ev.time ?? '',
           price: ev.price,
           description: ev.description
