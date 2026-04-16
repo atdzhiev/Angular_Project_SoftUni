@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -21,6 +22,7 @@ export const routes: Routes = [
     path: "profile",
     loadComponent: () =>
       import("./features/profile/profile").then((m) => m.Profile),
+      canActivate: [authGuard],
   },
   {
     path: "events",
@@ -36,11 +38,13 @@ export const routes: Routes = [
     path: "create",
     loadComponent: () =>
       import("./features/event-add/event-add").then((m) => m.EventAdd),
+      canActivate: [authGuard],
   },
   {
     path: 'edit/:id',
     loadComponent: () =>
-      import('./features/event-add/event-add').then(m => m.EventAdd)
+      import('./features/event-add/event-add').then(m => m.EventAdd),
+      canActivate: [authGuard],
   },
   {
     path: 'contact',
