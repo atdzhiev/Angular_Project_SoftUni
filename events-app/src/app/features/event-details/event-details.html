@@ -3,85 +3,79 @@
   @if (event()) {
   @let e = event()!;
 
-  <h1 class="details-title">{{ e.title }}</h1>
 
-  <div class="details-layout">
+  <div class="hero-section">
+    <img [src]="e.images[0]" class="hero-image">
+    <div class="hero-overlay"></div>
 
-  
-    <div class="details-left">
+    @if (isOwner()) {
+    <div class="hero-actions">
+      <button class="edit-btn" [routerLink]="['/edit', e._id]">Edit</button>
+      <button class="delete-btn" (click)="openDeleteModal()">Delete</button>
+    </div>
+    }
+  </div>
 
-      
-      <p class="description-text">
-        {{ e.description }}
-      </p>
+  <h1 class="hero-title">{{ e.title }}</h1>
 
-     
-      <p class="info-line">
-        <strong>Address:</strong> {{ e.town }}, {{ e.address }}
-      </p>
+  <div class="description-block">
+    <p>{{ e.description }}</p>
+  </div>
 
-     
-      <p class="info-line">
-        <strong>Date:</strong> {{ e.date }}
-      </p>
+  <div class="info-panel">
 
-     
-      <p class="info-line">
-        <strong>Price:</strong> {{ e.price }}
-      </p>
+    <div class="info-grid">
+      <p class="info-line"><strong>Category:</strong> {{ e.category }}</p>
+      <p class="info-line"><strong>Location:</strong> {{ e.town }}, {{ e.address }}</p>
+      <p class="info-line"><strong>Start time:</strong> {{ e.date }} {{ e.time }}</p>
+      <p class="info-line"><strong>Ticket Price:</strong> {{ e.price }} EUR</p>
+      <p class="info-line"><strong>People joined:</strong> {{ e.participants.length }}</p>
+    </div>
 
-    
+    <div class="action-area">
       @if (!isLoggedIn()) {
       <div class="login-box">
-        <span class="login-text">Wish to join the event:</span>
+        <span class="login-text">Wish to join the event?</span>
         <button class="login-btn" routerLink="/login">Sign in</button>
       </div>
       }
 
-
-      
       @if (isLoggedIn() && !isOwner()) {
-
       @if (!hasJoined()) {
       <button class="join-btn" (click)="joinEvent()">Join Event</button>
       }
-
       @if (hasJoined()) {
       <button class="join-btn joined" (click)="leaveEvent()">Leave Event</button>
       }
-
       }
-
-    </div>
-
-
-
-    
-    <div class="details-right">
-
-      @if (isOwner()) {
-      <div class="top-actions">
-        <button class="edit-btn" [routerLink]="['/edit', e._id]">Edit</button>
-        <button class="delete-btn" (click)="deleteEvent()">Delete</button>
-      </div>
-      }
-
-      <img [src]="e.images[currentImage]" class="main-image">
     </div>
 
   </div>
 
-  
-  <div class="gallery-wrapper">
+  <div class="filmstrip">
+    @for (img of e.images; track $index) {
+    <img [src]="img" class="filmstrip-thumb" (click)="openViewer(img)">
+    }
+  </div>
 
-    <div class="gallery-row" #gallery>
-      @for (img of e.images; track $index) {
-      <img [src]="img" class="gallery-thumb" (click)="currentImage = $index">
-      }
-    </div>
-
+  <div class="image-viewer" (click)="closeViewer()" [class.active]="viewerActive">
+    <img [src]="viewerImage" class="viewer-img">
   </div>
 
   }
+  @if (showDeleteModal) {
+  <div class="modal-overlay" (click)="closeDeleteModal()"></div>
+
+  <div class="modal-box">
+    <h2>Delete Event?</h2>
+    <p>Are you sure you want to delete this event? This action cannot be undone.</p>
+
+    <div class="modal-actions">
+      <button class="modal-btn cancel" (click)="closeDeleteModal()">Cancel</button>
+      <button class="modal-btn delete" (click)="confirmDelete()">Delete</button>
+    </div>
+  </div>
+  }
+
 
 </section>

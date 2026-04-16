@@ -22,7 +22,9 @@ export class EventDetails {
   isOwner = signal(false);
   joined = signal(false);
   isLoggedIn = signal(false);
-  currentImage = 0;
+  viewerActive = false;
+  viewerImage = '';
+  showDeleteModal = false;
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -88,31 +90,29 @@ export class EventDetails {
     });
   }
 
-  prevImage() {
-    const imgs = this.event()?.images;
-    if (!imgs) return;
-    this.currentImage = (this.currentImage - 1 + imgs.length) % imgs.length;
+  openDeleteModal() {
+    this.showDeleteModal = true;
   }
 
-  nextImage() {
-    const imgs = this.event()?.images;
-    if (!imgs) return;
-    this.currentImage = (this.currentImage + 1) % imgs.length;
+  closeDeleteModal() {
+    this.showDeleteModal = false;
   }
 
-  deleteEvent() {
+  confirmDelete() {
     const id = this.event()?._id;
     if (!id) return;
-
-    if (!confirm("Are you sure you want to delete this event?")) return;
 
     this.eventService.delete(id).subscribe(() => {
       this.router.navigate(['/events']);
     });
   }
 
-  scrollGallery(amount: number) {
-    const gallery = document.querySelector('.gallery-row') as HTMLElement;
-    if (gallery) gallery.scrollLeft += amount;
+  openViewer(img: string) {
+    this.viewerImage = img;
+    this.viewerActive = true;
+  }
+
+  closeViewer() {
+    this.viewerActive = false;
   }
 }
