@@ -55,18 +55,28 @@
       <label>Title</label>
       <input formControlName="title" type="text">
       @if (form.get('title')?.touched && form.get('title')?.errors?.['required']) {
-      <p class="error-message">This field is required</p>
+      <p class="error-message">Title is required</p>
       }
     </div>
 
 
     <div class="form-group">
       <label>Category</label>
-      <input formControlName="category" type="text">
+      <select formControlName="category">
+        <option value="">Select category</option>
+        <option value="Music">Music</option>
+        <option value="Culture">Culture</option>
+        <option value="Sport">Sport</option>
+        <option value="Family">Family</option>
+        <option value="Kids">Kids</option>
+        <option value="Podcast">Podcast</option>
+      </select>
+
       @if (form.get('category')?.touched && form.get('category')?.errors?.['required']) {
-      <p class="error-message">This field is required</p>
+      <p class="error-message">Category is required</p>
       }
     </div>
+
 
 
     <div class="form-row">
@@ -80,7 +90,7 @@
           <option value="Burgas">Burgas</option>
         </select>
         @if (form.get('town')?.touched && form.get('town')?.errors?.['required']) {
-        <p class="error-message">This field is required</p>
+        <p class="error-message">Town is required</p>
         }
       </div>
 
@@ -88,7 +98,7 @@
         <label>Address</label>
         <input formControlName="address" type="text">
         @if (form.get('address')?.touched && form.get('address')?.errors?.['required']) {
-        <p class="error-message">This field is required</p>
+        <p class="error-message">Address is required</p>
         }
       </div>
     </div>
@@ -99,7 +109,7 @@
         <label>Date</label>
         <input formControlName="date" type="date">
         @if (form.get('date')?.touched && form.get('date')?.errors?.['required']) {
-        <p class="error-message">This field is required</p>
+        <p class="error-message">Date is required</p>
         }
       </div>
 
@@ -107,7 +117,7 @@
         <label>Start Time</label>
         <input formControlName="time" type="text" placeholder="HH:MM" pattern="^[0-2][0-9]:[0-5][0-9]$" maxlength="5">
         @if (form.get('time')?.touched && form.get('time')?.errors?.['required' ]) {
-        <p class="error-message">This field is required</p>
+        <p class="error-message">Start time is required</p>
         }
 
         @if (form.get('time')?.errors?.['pattern']) {
@@ -130,7 +140,7 @@
       <label>Description</label>
       <textarea formControlName="description" placeholder="Enter description"></textarea>
       @if (form.get('description')?.touched && form.get('description')?.errors?.['required']) {
-      <p class="error-message">This field is required</p>
+      <p class="error-message">Description is required</p>
       }
     </div>
 
