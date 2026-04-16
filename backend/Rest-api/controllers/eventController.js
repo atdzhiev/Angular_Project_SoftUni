@@ -3,7 +3,11 @@ const {userModel} = require('../models')
 
 
 function getEvents(req, res, next) {
+    const limit = Number(req.query.limit) || 0;
+
     eventModel.find()
+        .sort({ created_at: -1 })
+        .limit(limit)
         .populate('_ownerId')
         .populate('participants')
         .then(events => res.json(events))

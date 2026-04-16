@@ -1,18 +1,29 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject,ChangeDetectorRef } from '@angular/core';
+import { Router, RouterModule,  } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
+import { EventService } from '../../core/services/event';
+import { EventItem } from '../../shared/interfaces/event';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,RouterModule,CommonModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home {
 
-  constructor(private router: Router) {
+  private eventService = inject(EventService);
+
+  lastThreeEvents: EventItem[] = [];
+
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {
     document.body.classList.add('home-active');
+    this.eventService.getLastThree().subscribe(events => {
+      this.lastThreeEvents = events;
+      this.cdr.detectChanges();
+    });
   }
 
   ngOnDestroy() {

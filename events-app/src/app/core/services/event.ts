@@ -38,8 +38,8 @@ export class EventService {
     });
   }
 
-   getLastThree(): Observable<EventItem[]> {
-    return this.http.get<EventItem[]>(`${this.baseUrl}/events?limit=3`);
+  getLastThree(): Observable<EventItem[]> {
+    return this.http.get<EventItem[]>(`${this.baseUrl}?limit=3`);
   }
 
   joinEvent(eventId: string): Observable<any> {

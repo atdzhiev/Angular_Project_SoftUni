@@ -74,7 +74,6 @@ export class CatalogComponent {
       this.selectedDate()
     );
 
-    // 3. Sorting
     list = this.utils.sortEvents(
       list,
       this.priceSort(),
