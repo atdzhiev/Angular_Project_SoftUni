@@ -2,6 +2,7 @@ import { Component, signal, computed, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { NotifierService } from '../../../core/services/notifier';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ import { AuthService } from '../../../core/services/auth.service';
 export class Login {
   private auth = inject(AuthService);
   private router = inject(Router);
+  private notifier = inject(NotifierService);
 
   email = signal('');
   password = signal('');
@@ -20,7 +22,20 @@ export class Login {
   loading = computed(() => this.auth.loading());
   error = computed(() => this.auth.error());
 
+  markAllAsTouched(form: NgForm) {
+    Object.values(form.controls).forEach(control => {
+      control.markAsTouched();
+    });
+  }
+
   submit(form: NgForm) {
+
+    if (form.invalid) {
+      this.markAllAsTouched(form);
+      this.showRequiredNotification();
+      return;
+    }
+
     this.auth.login({
       email: this.email(),
       password: this.password()
@@ -37,6 +52,10 @@ export class Login {
         form.resetForm();
       }
     });
+  }
+
+  showRequiredNotification() {
+    this.notifier.showError('All fields are required.');
   }
 
   onInputChange() {

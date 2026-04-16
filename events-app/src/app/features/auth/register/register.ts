@@ -1,7 +1,8 @@
 import { Component, signal, computed, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink,Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { NotifierService } from '../../../core/services/notifier';
 
 @Component({
   selector: 'app-register',
@@ -12,6 +13,7 @@ import { AuthService } from '../../../core/services/auth.service';
 export class Register {
    private auth = inject(AuthService);
   private router = inject(Router);
+  private notifier = inject(NotifierService)
 
   
   username = signal('');
@@ -22,11 +24,22 @@ export class Register {
  
   loading = computed(() => this.auth.loading());
   error = computed(() => this.auth.error());
-
-  
+ 
   localError = signal<string | null>(null);
 
-  submit() {
+  markAllAsTouched(form: NgForm) {
+  Object.values(form.controls).forEach(control => {
+    control.markAsTouched();
+  });
+}
+
+  submit(form:NgForm) {
+
+    if (form.invalid || this.password() !== this.repass()) {
+    this.markAllAsTouched(form);
+    this.showRequiredNotification();
+    return;
+  }
    
     if (this.password() !== this.repass()) {
       this.localError.set('Passwords do not match');
@@ -44,6 +57,10 @@ export class Register {
       next: () => this.router.navigate(['/'])
     });
   }
+
+  showRequiredNotification() {
+  this.notifier.showError('All fields are required.');
+}
 
   onInputChange() {
     this.localError.set(null);
