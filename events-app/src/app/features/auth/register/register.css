@@ -123,7 +123,6 @@
   color: #ff3b4f;
 }
 
-
 app-header header {
   background: transparent !important;
   box-shadow: none !important;
@@ -138,3 +137,16 @@ app-header header {
   background: #ffffff !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
 }
+
+input.ng-invalid.ng-touched {
+  border: 1px solid #e53935 !important;
+  background: #ffecec;
+}
+
+.error-msg {
+  color: #e53935;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+

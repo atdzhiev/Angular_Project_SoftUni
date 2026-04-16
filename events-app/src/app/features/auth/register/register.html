@@ -7,38 +7,82 @@
       <h2 class="register-title">Create Account</h2>
       <p class="register-subtitle">Join us and get started</p>
 
-      <form>
+      <form #regForm="ngForm">
 
+      
         <div class="form-group">
-          <input type="text" placeholder="Username" [value]="username()"
-            (input)="username.set($event.target.value); onInputChange()" />
+          <input type="text"
+                 name="username"
+                 placeholder="Username"
+                 required
+                 minlength="5"
+                 [ngModel]="username()"
+                 (ngModelChange)="username.set($event); onInputChange()"
+                 #usernameField="ngModel" />
+
+          @if (usernameField.invalid && usernameField.touched) {
+            <p class="error-msg">Username is required (min 5 characters)</p>
+          }
         </div>
 
+        
         <div class="form-group">
-          <input type="email" placeholder="Email Address" [value]="email()"
-            (input)="email.set($event.target.value); onInputChange()" />
+          <input type="email"
+                 name="email"
+                 placeholder="Email Address"
+                 required
+                 email
+                 [ngModel]="email()"
+                 (ngModelChange)="email.set($event); onInputChange()"
+                 #emailField="ngModel" />
+
+          @if (emailField.invalid && emailField.touched) {
+            <p class="error-msg">Please enter a valid email</p>
+          }
         </div>
 
+       
         <div class="form-group">
-          <input type="password" placeholder="Password" [value]="password()"
-            (input)="password.set($event.target.value); onInputChange()" />
+          <input type="password"
+                 name="password"
+                 placeholder="Password"
+                 required
+                 minlength="6"
+                 [ngModel]="password()"
+                 (ngModelChange)="password.set($event); onInputChange()"
+                 #passwordField="ngModel" />
+
+          @if (passwordField.invalid && passwordField.touched) {
+            <p class="error-msg">Password must be at least 6 characters</p>
+          }
         </div>
 
+      
         <div class="form-group">
-          <input type="password" placeholder="Confirm Password" [value]="repass()"
-            (input)="repass.set($event.target.value); onInputChange()" />
+          <input type="password"
+                 name="repass"
+                 placeholder="Confirm Password"
+                 required
+                 [ngModel]="repass()"
+                 (ngModelChange)="repass.set($event); onInputChange()"
+                 #repassField="ngModel" />
+
+          @if (repassField.touched && password() !== repass()) {
+            <p class="error-msg">Passwords do not match</p>
+          }
         </div>
 
-        <button type="button" class="btn-register" (click)="submit()" [disabled]="loading()">
+       
+        <button type="button"
+                class="btn-register"
+                (click)="submit()"
+                [disabled]="loading() || regForm.invalid || password() !== repass()">
+
           {{ loading() ? 'Creating account...' : 'Register' }}
         </button>
 
-        @if (localError()) {
-        <p class="error-msg">{{ localError() }}</p>
-        }
-
         @if (error()) {
-        <p class="error-msg">{{ error() }}</p>
+          <p class="error-msg">{{ error() }}</p>
         }
 
         <div class="register-footer-center">
