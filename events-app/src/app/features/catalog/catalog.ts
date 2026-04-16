@@ -3,10 +3,10 @@ import { EventCardComponent } from '../../shared/components/event-card/event-car
 import { EventService } from '../../core/services/event';
 import { CatalogUtilsService } from '../../core/services/catalog-utils.service';
 import { EventItem } from '../../shared/interfaces/event';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-catalog',
-  standalone: true,
   imports: [EventCardComponent],
   templateUrl: './catalog.html',
   styleUrls: ['./catalog.css']
@@ -15,9 +15,10 @@ export class CatalogComponent {
 
   private eventService = inject(EventService);
   private utils = inject(CatalogUtilsService);
+  private route = inject(ActivatedRoute);
 
   events = signal<EventItem[]>([]);
-
+  searchText = signal('');
   selectedTown = signal('');
   selectedCategory = signal('');
   selectedDate = signal('');
@@ -26,15 +27,20 @@ export class CatalogComponent {
 
   currentPage = signal(1);
   itemsPerPage = 12;
+
   pageNumbers = computed(() =>
-  Array.from({ length: this.totalPages() }, (_, i) => i + 1)
+    Array.from({ length: this.totalPages() }, (_, i) => i + 1)
   );
 
   constructor() {
+    this.route.queryParams.subscribe(params => {
+      this.searchText.set(params['q'] || '');
+      this.selectedTown.set(params['town'] || '');
+      this.currentPage.set(1);
+    });
     this.eventService.getAll().subscribe(data => this.events.set(data));
   }
 
- 
   applyTownFilter(v: string) { this.selectedTown.set(v); this.currentPage.set(1); }
   applyCategoryFilter(v: string) { this.selectedCategory.set(v); this.currentPage.set(1); }
   applyDateFilter(v: string) { this.selectedDate.set(v); this.currentPage.set(1); }
@@ -42,6 +48,7 @@ export class CatalogComponent {
   applyDateSort(v: string) { this.dateSort.set(v); this.currentPage.set(1); }
 
   clearFilters() {
+    this.searchText.set('');
     this.selectedTown.set('');
     this.selectedCategory.set('');
     this.selectedDate.set('');
@@ -50,15 +57,24 @@ export class CatalogComponent {
     this.currentPage.set(1);
   }
 
-  
   filteredEvents = computed(() => {
-    let list = this.utils.filterEvents(
-      this.events(),
+    let list = this.events();
+
+    if (this.searchText()) {
+      const keyword = this.searchText().toLowerCase();
+      list = list.filter(e =>
+        e.title.toLowerCase().includes(keyword)
+      );
+    }
+
+    list = this.utils.filterEvents(
+      list,
       this.selectedTown(),
       this.selectedCategory(),
       this.selectedDate()
     );
 
+    // 3. Sorting
     list = this.utils.sortEvents(
       list,
       this.priceSort(),
