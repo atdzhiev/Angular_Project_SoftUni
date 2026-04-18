@@ -11,4 +11,8 @@ import { RouterLink } from '@angular/router';
 })
 export class EventCardComponent {
   @Input() event!: EventItem;
+
+  scrollTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }

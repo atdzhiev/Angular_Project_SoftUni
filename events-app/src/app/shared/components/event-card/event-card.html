@@ -22,7 +22,7 @@
       Ticket price: <strong>{{ event.price }} EUR</strong>
     </p>
 
-    <button class="details-btn" [routerLink]="['/events', event._id]">
+    <button class="details-btn" [routerLink]="['/events', event._id]" (click)="scrollTop()">
       View Details
     </button>
 
