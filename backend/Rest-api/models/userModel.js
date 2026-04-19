@@ -39,14 +39,6 @@ const userSchema = new mongoose.Schema({
     events: [{
         type: ObjectId,
         ref: "Theme"
-    }],
-    themes: [{
-        type: ObjectId,
-        ref: "Theme"
-    }],
-    posts: [{
-        type: ObjectId,
-        ref: "Post"
     }]
 }, { timestamps: { createdAt: 'created_at' } });
 
