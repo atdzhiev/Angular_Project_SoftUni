@@ -18,9 +18,7 @@
 
   <h1 class="hero-title">{{ e.title }}</h1>
 
-  <div class="description-block">
-    <p>{{ e.description }}</p>
-  </div>
+  <div class="description-block" [innerHTML]="(e?.description ?? '') | paragraphs"></div>
 
   <div class="info-panel">
 

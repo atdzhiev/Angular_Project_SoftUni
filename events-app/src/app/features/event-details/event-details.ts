@@ -3,11 +3,12 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { EventItem } from '../../shared/interfaces/event';
 import { EventService } from '../../core/services/event';
 import { AuthService } from '../../core/services/auth.service';
+import { ParagraphsPipe } from '../../shared/pipes/paragraphs.pipe';
 
 @Component({
   selector: 'app-event-details',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, ParagraphsPipe],
   templateUrl: './event-details.html',
   styleUrl: './event-details.css',
 })

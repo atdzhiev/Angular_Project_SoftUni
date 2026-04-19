@@ -90,9 +90,15 @@
   font-size: 19px;
   color: #333;
   line-height: 1.7;
-  text-align: center;
+  text-align: left;
+  white-space: pre-line;
 }
 
+.description-block p {
+  white-space: pre-line;
+  margin: 0 0 1.2rem;
+  text-indent: 20px;
+}
 
 .info-panel {
   width: 55%;
