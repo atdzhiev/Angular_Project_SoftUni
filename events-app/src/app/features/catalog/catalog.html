@@ -3,7 +3,6 @@
 
   <div class="catalog-filters">
 
-    
     <div class="filter-group">
       <label>Town:</label>
       <select [value]="selectedTown()" (change)="applyTownFilter($any($event.target).value)">
@@ -15,7 +14,6 @@
       </select>
     </div>
 
-   
     <div class="filter-group">
       <label>Category:</label>
       <select [value]="selectedCategory()" (change)="applyCategoryFilter($any($event.target).value)">
@@ -29,13 +27,11 @@
       </select>
     </div>
 
-    
     <div class="filter-group">
       <label>From date:</label>
       <input type="date" [value]="selectedDate()" (change)="applyDateFilter($any($event.target).value)">
     </div>
 
-    
     <div class="filter-group">
       <label>Price:</label>
       <select [value]="priceSort()" (change)="applyPriceSort($any($event.target).value)">
@@ -45,7 +41,6 @@
       </select>
     </div>
 
-   
     <div class="filter-group">
       <label>Date:</label>
       <select [value]="dateSort()" (change)="applyDateSort($any($event.target).value)">
@@ -55,7 +50,6 @@
       </select>
     </div>
 
-    
     <div class="filter-group">
       <label>&nbsp;</label>
       <button class="clear-btn" (click)="clearFilters()">Clear Filters</button>
@@ -63,14 +57,16 @@
 
   </div>
 
- 
-  <div class="catalog-grid">
+  <div class="catalog-grid" [class.empty]="paginatedEvents().length === 0">
+    @if (paginatedEvents().length > 0) {
     @for (event of paginatedEvents(); track event._id) {
     <app-event-card [event]="event"></app-event-card>
     }
+    } @else {
+    <p class="no-events">No events match your filters.</p>
+    }
   </div>
 
-  
   <div class="pagination">
     <button (click)="prevPage()" [disabled]="currentPage() === 1">
       Prev

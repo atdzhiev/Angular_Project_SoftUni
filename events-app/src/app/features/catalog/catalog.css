@@ -182,3 +182,12 @@
   border-color: #0C325B;
   transform: none;
 }
+
+.catalog-grid.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
