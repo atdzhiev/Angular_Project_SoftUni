@@ -2,10 +2,11 @@ import { Injectable, signal, computed, effect, WritableSignal } from '@angular/c
 import { HttpClient } from '@angular/common/http';
 import { LoginData, RegisterData, User } from '../../shared/interfaces/user';
 import { tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'http://localhost:3000/api';
+  private baseUrl = environment.apiUrl;
 
   
   private _user: WritableSignal<User | null> = signal<User | null>(null);
