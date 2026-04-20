@@ -10,33 +10,23 @@ export class EventService {
   private baseUrl = `${environment.apiUrl}/events`;
 
   getAll(): Observable<EventItem[]> {
-    return this.http.get<EventItem[]>(this.baseUrl, {
-      withCredentials: true
-    });
+    return this.http.get<EventItem[]>(this.baseUrl);
   }
 
   getOne(id: string): Observable<EventItem> {
-    return this.http.get<EventItem>(`${this.baseUrl}/${id}`, {
-      withCredentials: true
-    });
+    return this.http.get<EventItem>(`${this.baseUrl}/${id}`);
   }
 
   create(data: EventItem): Observable<EventItem> {
-    return this.http.post<EventItem>(this.baseUrl, data, {
-      withCredentials: true
-    });
+    return this.http.post<EventItem>(this.baseUrl, data);
   }
 
   update(id: string, data: EventItem): Observable<EventItem> {
-    return this.http.put<EventItem>(`${this.baseUrl}/${id}`, data, {
-      withCredentials: true
-    });
+    return this.http.put<EventItem>(`${this.baseUrl}/${id}`, data);
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`, {
-      withCredentials: true
-    });
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
   getLastThree(): Observable<EventItem[]> {
@@ -46,16 +36,14 @@ export class EventService {
   joinEvent(eventId: string): Observable<any> {
     return this.http.post(
       `${this.baseUrl}/${eventId}/join`,
-      {},
-      { withCredentials: true }
+      {}
     );
   }
 
   leaveEvent(eventId: string): Observable<any> {
     return this.http.post(
       `${this.baseUrl}/${eventId}/leave`,
-      {},
-      { withCredentials: true }
+      {}
     );
   }
 
@@ -63,7 +51,6 @@ export class EventService {
   getByCreator(userId: string): Observable<EventItem[]> {
     return this.http.get<EventItem[]>(
       `${this.baseUrl}?creator=${userId}`,
-      { withCredentials: true }
     );
   }
 
