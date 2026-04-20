@@ -8,7 +8,7 @@ const cookieSecret = process.env.COOKIESECRET || 'SoftUni';
 module.exports = (app) => {
     // Enable CORS for Angular dev server
     app.use(cors({
-        origin: 'http://localhost:4200',
+        origin: ['http://localhost:4200', 'https://eventsapp-0eaf.onrender.com'],
         credentials: true
     }));
 
