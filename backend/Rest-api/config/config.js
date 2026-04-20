@@ -11,7 +11,7 @@ const config = {
     production: {
         port: process.env.PORT || 3000,
         dbURL: process.env.MONGO_URI,
-        origin: []
+        origin: ['https://eventsapp-0eaf.onrender.com']
     }
 };
 
