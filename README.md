@@ -37,17 +37,29 @@ The app is built with **Angular** (frontend) and SoftUni Rest API (backend).
 
 ---
 
+## 🔑 Core Features  
+- **JWT Authentication** with automatic token injection via Angular interceptor  
+- **Protected Routes** using `authGuard` (`/profile`, `/create`, `/edit/:id`)  and `guestGuard` (`/login`, `/register`)
+- **Event CRUD** (create, read, update, delete)  
+- **Join/Leave System** for event participation  
+- **LocalStorage Persistence** for user session  
+- **Angular Components** and **Signals** for state
+
+---
+
 ## ▶️ Running the App  
 ### **Client**
-npm install
-ng serve
+`npm install`  
+`ng serve`
 
 ### **Server**
-npm install
-npm start
+`npm install`  
+`npm start`
 
-## Deployment
-Both the frontend and backend are deployed on Render.
+---
+
+## Deployment  
+Both the **frontend** and **backend** are deployed on **Render**.
 
 
 
