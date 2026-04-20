@@ -8,29 +8,31 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
   private baseUrl = environment.apiUrl;
 
-  
   private _user: WritableSignal<User | null> = signal<User | null>(null);
   private _loading: WritableSignal<boolean> = signal<boolean>(false);
   private _error: WritableSignal<string | null> = signal<string | null>(null);
 
-  
   user = computed(() => this._user());
   isLogged = computed(() => !!this._user());
   loading = computed(() => this._loading());
   error = computed(() => this._error());
 
   constructor(private http: HttpClient) {
-    const saved = localStorage.getItem('user');
-    if (saved) {
-      this._user.set(JSON.parse(saved));
+    const savedUser = localStorage.getItem('user');
+    const savedToken = localStorage.getItem('authToken');
+
+    if (savedUser && savedToken) {
+      this._user.set(JSON.parse(savedUser));
     }
 
     effect(() => {
       const u = this._user();
+
       if (u) {
         localStorage.setItem('user', JSON.stringify(u));
       } else {
         localStorage.removeItem('user');
+        localStorage.removeItem('authToken');
       }
     });
   }
@@ -43,10 +45,11 @@ export class AuthService {
     this._loading.set(true);
     this._error.set(null);
 
-    return this.http.post<User>(`${this.baseUrl}/register`, data,  { withCredentials: true }).pipe(
+    return this.http.post<any>(`${this.baseUrl}/register`, data).pipe(
       tap({
-        next: (user) => {
-          this._user.set(user);
+        next: (res) => {
+          this._user.set(res.user);
+          localStorage.setItem('authToken', res.accessToken);
           this._loading.set(false);
         },
         error: (err) => {
@@ -61,10 +64,11 @@ export class AuthService {
     this._loading.set(true);
     this._error.set(null);
 
-    return this.http.post<User>(`${this.baseUrl}/login`, data,  { withCredentials: true }).pipe(
+    return this.http.post<any>(`${this.baseUrl}/login`, data).pipe(
       tap({
-        next: (user) => {
-          this._user.set(user);
+        next: (res) => {
+          this._user.set(res.user);
+          localStorage.setItem('authToken', res.accessToken);
           this._loading.set(false);
         },
         error: (err) => {
@@ -78,10 +82,12 @@ export class AuthService {
   logout() {
     this._loading.set(true);
 
-    return this.http.post(`${this.baseUrl}/logout`,  { withCredentials: true }).pipe(
+    return this.http.post(`${this.baseUrl}/logout`, {}).pipe(
       tap({
         next: () => {
           this._user.set(null);
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('user');
           this._loading.set(false);
         },
         error: () => {

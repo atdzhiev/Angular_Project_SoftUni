@@ -1,5 +1,4 @@
 const jwt = require('./jwt');
-const { authCookieName } = require('../app-config');
 const {
     userModel,
     tokenBlacklistModel
@@ -8,7 +7,8 @@ const {
 function auth(redirectUnauthenticated = true) {
 
     return function (req, res, next) {
-        const token = req.cookies[authCookieName] || '';
+        const token = req.headers.authorization?.split(' ')[1] || '';
+
         Promise.all([
             jwt.verifyToken(token),
             tokenBlacklistModel.findOne({ token })
@@ -17,28 +17,27 @@ function auth(redirectUnauthenticated = true) {
                 if (blacklistedToken) {
                     return Promise.reject(new Error('blacklisted token'));
                 }
-                userModel.findById(data.id)
+
+                return userModel.findById(data.id)
                     .then(user => {
                         req.user = user;
                         req.isLogged = true;
                         next();
-                    })
+                    });
             })
             .catch(err => {
                 if (!redirectUnauthenticated) {
                     next();
                     return;
                 }
+
                 if (['token expired', 'blacklisted token', 'jwt must be provided'].includes(err.message)) {
-                    console.error(err);
-                    res
-                        .status(401)
-                        .send({ message: "Invalid token!" });
-                    return;
+                    return res.status(401).send({ message: "Invalid token!" });
                 }
+
                 next(err);
             });
-    }
+    };
 }
 
 module.exports = auth;
